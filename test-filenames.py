@@ -12,13 +12,29 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 
-print('hello, world!')
-test = "/home/eleven/Music/coldplay-cemeteriesOfLondon.mp3"
+GPIO.setmode(GPIO.BCM)
+butt = 13
 
-player = subprocess.Popen(["mplayer", "-volume 0", test], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+print('started')
+
+
+print('hello, world!')
+#test = "/home/eleven/Music/coldplay-cemeteriesOfLondon.mp3"
+
+player = subprocess.Popen(["mplayer", "-volume 0", "/home/eleven/Music/coldplay-cemeteriesOfLondon.mp3"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 
 time.sleep(5)
-player.terminate()
+#player.terminate()
 
 print('again!')
 
+
+while True:
+  if(GPIO.input(butt)==0):
+    print('22')
+    player.stdin.write('p')
+    player.stdin.flush()
+
+  time.sleep(1)

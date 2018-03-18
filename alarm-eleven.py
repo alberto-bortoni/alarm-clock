@@ -18,9 +18,12 @@ from random import *
 #################################
 
 snoozeTimes = 10
-timeIncVol = 1
+timeIncVol = 5
 timeButt = 2
 snoozeInc = 2
+volume = 10
+volumeStep = 2
+maxVol = 80
 
 butt = 13
 exitFlag = 0
@@ -29,7 +32,7 @@ snooze = 0
 
 musicDir = "/home/eleven/Music/"
 songs = os.listdir(musicDir)
-songsNum=len(musicDir)
+songsNum=len(songs)
 randSong = randint(1, songsNum)-1
 
 #################################
@@ -47,14 +50,17 @@ buttTime = time.time()
 #             MAIN              #
 #################################
 
-player = subprocess.Popen(["mplayer", "-volume", "10", "-volstep", "1", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+player = subprocess.Popen(["mplayer", "-volume", str(volume), "-volstep", str(volumeStep), "-loop", "0", "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+time.sleep(10)
 
 while exitFlag==0:
 
   if (time.time()-lastTime >= timeIncVol):  #increase volume
-    player.stdin.write('0')
-    player.stdin.flush()
-    lastTime = time.time()
+    if(volume<maxVol)
+      player.stdin.write('0')
+      player.stdin.flush()
+      lastTime = time.time()
+      volume = volume+volumeStep
 
   if(GPIO.input(butt)==0):                  #start snooze/exit
     time.sleep(0.25)
@@ -69,20 +75,19 @@ while exitFlag==0:
           player.stdin.write('9')           #reduce noise every button
           player.stdin.flush()
           time.sleep(0.25)
+          volume = volume-volumeStep
 
-      if(snooze >= snoozeTimes)             #exit, snoozed
+      if(snooze >= snoozeTimes):            #exit, snoozed
         player.terminate()
         exitFlag=1
+        alarm = subprocess.Popen(["mplayer", "-volume", 75, "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        time.sleep(6)
+        alarm.terminate()
+
+    snooze = 0                              #reset counter
 
   if (time.time()-startTime > 600):         #exit program, too long
     player.terminate()
     exitFlag=1
 
-
-#################################
-#           SERVICES            #
-#################################
-
-
-
-
+#EOF#

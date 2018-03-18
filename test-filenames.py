@@ -21,9 +21,10 @@ print('started')
 
 
 print('hello, world!')
-#test = "/home/eleven/Music/coldplay-cemeteriesOfLondon.mp3"
+test = "/home/eleven/Music/"
+song = "coldplay-cemeteriesOfLondon.mp3"
 
-player = subprocess.Popen(["mplayer", "/home/eleven/Music/coldplay-cemeteriesOfLondon.mp3"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+player = subprocess.Popen(["mplayer", "-volume", "50", "-volstep", "2", test+song], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 
 time.sleep(5)
 #player.terminate()

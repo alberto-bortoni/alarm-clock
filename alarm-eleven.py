@@ -23,7 +23,7 @@ timeButt = 2
 snoozeInc = 2
 volume = 10
 volumeStep = 2
-maxVol = 80
+maxVol = 90
 
 butt = 13
 exitFlag = 0
@@ -50,7 +50,11 @@ buttTime = time.time()
 #             MAIN              #
 #################################
 
-player = subprocess.Popen(["mplayer", "-volume", str(volume), "-volstep", str(volumeStep), "-loop", "0", "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+alarm = subprocess.Popen(["mplayer", "-volume", str(volume), "-really-quiet", "home/eleven/Alarms/Alarm03.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+time.sleep(6)
+#alarm.terminate()
+
+player = subprocess.Popen(["mplayer", "-volume", "-1", "-volstep", str(volumeStep), "-loop", "0", "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 time.sleep(10)
 
 while exitFlag==0:
@@ -61,6 +65,7 @@ while exitFlag==0:
       player.stdin.flush()
       lastTime = time.time()
       volume = volume+volumeStep
+      print(volume)
 
   if(GPIO.input(butt)==0):                  #start snooze/exit
     time.sleep(0.25)
@@ -80,7 +85,7 @@ while exitFlag==0:
       if(snooze >= snoozeTimes):            #exit, snoozed
         player.terminate()
         exitFlag=1
-        alarm = subprocess.Popen(["mplayer", "-volume", 75, "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        alarm = subprocess.Popen(["mplayer", "-volume", "75", "-really-quiet", "/home/eleven/Alarms/Alarm03.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         time.sleep(6)
         alarm.terminate()
 

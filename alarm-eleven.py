@@ -56,7 +56,7 @@ time.sleep(10)
 while exitFlag==0:
 
   if (time.time()-lastTime >= timeIncVol):  #increase volume
-    if(volume<maxVol)
+    if(volume<maxVol):
       player.stdin.write('0')
       player.stdin.flush()
       lastTime = time.time()

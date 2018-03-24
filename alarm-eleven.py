@@ -23,7 +23,8 @@ timeButt = 2
 snoozeInc = 2
 volume = 10
 volumeStep = 2
-maxVol = 94
+maxVol = 110
+medVol = 90
 
 butt = 13
 exitFlag = 0

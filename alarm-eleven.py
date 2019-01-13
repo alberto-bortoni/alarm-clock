@@ -53,26 +53,25 @@ numShortPresses = 0
 #################################
 #         GPIO INIT             #
 #################################
+def butt_callback(channel):
+  buttValue = GPIO.input(channel)
+  if buttValue:
+    buttFallingTime = time.time()
+    buttDuration = (buttFallingTime - buttRisingTime) if buttRisingTime is not None else None
+  else:
+    buttRisingTime = time.time()
 
-def butt_rising(channel):
-  buttRisingTime = time.time()
-  print "Rising edge detected on channel %i at %f".format(channel, buttRisingTime)
-
-def butt_falling(channel):
-  buttFallingTime = time.time()
-  buttDuration = (buttFallingTime - buttRisingTime) if buttRisingTime is not None else None
-  print "Detected falling edge on channel %i at %f duration %f".format(channel, buttRisingTime, buttDuration)
+  print "Detected edge %i on channel %i at %f duration %f".format(buttValue, channel, buttRisingTime, buttDuration)
   if buttDuration > longPressTime:
     longPressWaiting = True
     numLongPresses += 1
-  else:
+  else if buttDuration is not None:
     shortPressWaiting = True
     numShortPresses += 1
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(butt, GPIO.RISING, callback=butt_rising)  # add rising edge detection on a channel
-GPIO.add_event_detect(butt, GPIO.FALLING, callback=butt_falling)
+GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback, bouncetime=200)  # add rising edge detection on a channel
 #################################
 #             MAIN              #
 #################################

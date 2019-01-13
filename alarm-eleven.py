@@ -17,7 +17,7 @@ from random import *
 #          VARIABLES            #
 #################################
 
-longPressTime = 1
+longPressTime = 3
 timeIncVol = 5
 timeButt = 2
 snoozeInc = 2

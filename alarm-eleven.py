@@ -18,7 +18,6 @@ from random import *
 #################################
 
 longPressTime = 2
-snoozeTimes = 10
 timeIncVol = 5
 timeButt = 2
 snoozeInc = 2
@@ -50,12 +49,13 @@ longPressWaiting = False
 shortPressWaiting = False
 numLongPresses = 0
 numShortPresses = 0
+buttSequence = "" # empty sequence
 
 #################################
 #         GPIO INIT             #
 #################################
 def butt_callback(channel):
-  global buttRisingTime, buttFallingTime, buttDuration, longPressTime, longPressWaiting, shortPressWaiting, numLongPresses,numShortPresses
+  global buttSequence, buttRisingTime, buttFallingTime, buttDuration, longPressTime, longPressWaiting, shortPressWaiting, numLongPresses,numShortPresses
   buttValue = GPIO.input(channel)
   if buttValue:
     buttFallingTime = time.time()
@@ -70,10 +70,15 @@ def butt_callback(channel):
     print "LONG PRESS"
     longPressWaiting = True
     numLongPresses += 1
+    buttSequence += 'l'
+
   elif buttDuration is not None:
     shortPressWaiting = True
     numShortPresses += 1
+    buttSequence += 's'
     print "SHORT PRESS {}".format(numShortPresses)
+
+  print 'Sequence: {}'.format(buttSequence)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -88,6 +93,8 @@ alarm.terminate()
 
 player = subprocess.Popen(["mplayer", "-volume", "-1", "-volstep", str(volumeStep), "-loop", "0", "-really-quiet", musicDir+songs[randSong]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 time.sleep(10)
+
+exitSequence = 'sslssl' #button press sequence for shutting off alarm
 
 while exitFlag==0:
 
@@ -113,7 +120,7 @@ while exitFlag==0:
           time.sleep(0.25)
           volume = volume-volumeStep
 
-      if(snooze >= snoozeTimes):            #exit, snoozed
+      if(exitSequence in buttSequence):            #exit, snoozed
         player.terminate()
         exitFlag=1
         alarm = subprocess.Popen(["mplayer", "-volume", "75", "-really-quiet", "/home/eleven/Alarms/Alarm03.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)

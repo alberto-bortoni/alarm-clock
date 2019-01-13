@@ -91,6 +91,7 @@ GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback)  # add rising edg
 def increase_volume():
   global volume, player, maxVol
   if (volume < maxVol):
+    print "Increasing volume"
     player.stdin.write('0')
     player.stdin.flush()
     volume = volume + volumeStep
@@ -98,6 +99,7 @@ def increase_volume():
 def decrease_volume():
   global volume, player, minVol
   if (volume > minVol):
+    print "Decreasing volume"
     player.stdin.write('9')
     player.stdin.flush()
     volume = volume - volumeStep
@@ -123,7 +125,6 @@ while exitFlag==0:
   if(longPressWaiting or shortPressWaiting):                  #start snooze/exit
     decrease_volume()                       #reduce noise every button
 
-    print "Checking sequence now"
     if(exitSequence in buttSequence):            #exit, snoozed
       print "Exit Sequence Activated"
       player.terminate()

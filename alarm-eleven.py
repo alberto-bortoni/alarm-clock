@@ -61,6 +61,8 @@ def butt_callback(channel):
     buttFallingTime = time.time()
     buttDuration = (buttFallingTime - buttRisingTime) if buttRisingTime is not None else None
   else:
+    buttFallingTime = None
+    buttDuration = None
     buttRisingTime = time.time()
 
   print "Detected edge {} on channel {} at {} duration {}".format(buttValue, channel, buttRisingTime, buttDuration)

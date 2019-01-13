@@ -63,7 +63,7 @@ def butt_callback(channel):
   else:
     buttRisingTime = time.time()
 
-  print "Detected edge %i on channel %i at %f duration %f".format(buttValue, channel, buttRisingTime, buttDuration)
+  print "Detected edge {} on channel {} at {} duration {}".format(buttValue, channel, buttRisingTime, buttDuration)
   if buttDuration > longPressTime:
     longPressWaiting = True
     numLongPresses += 1

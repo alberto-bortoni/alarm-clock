@@ -39,11 +39,6 @@ randSong = randint(1, songsNum)-1
 #################################
 #             INIT              #
 #################################
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(butt, GPIO.RISING, callback=butt_rising)  # add rising edge detection on a channel
-GPIO.add_event_detect(butt, GPIO.FALLING, callback=butt_falling)
-
 startTime = time.time()
 thisTime = time.time()
 lastTime = time.time()
@@ -74,6 +69,10 @@ def butt_falling(channel):
     shortPressWaiting = True
     numShortPresses += 1
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.add_event_detect(butt, GPIO.RISING, callback=butt_rising)  # add rising edge detection on a channel
+GPIO.add_event_detect(butt, GPIO.FALLING, callback=butt_falling)
 #################################
 #             MAIN              #
 #################################

@@ -65,7 +65,7 @@ def butt_callback(channel):
   if buttDuration > longPressTime:
     longPressWaiting = True
     numLongPresses += 1
-  else if buttDuration is not None:
+  elif buttDuration is not None:
     shortPressWaiting = True
     numShortPresses += 1
 

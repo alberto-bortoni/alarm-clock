@@ -65,15 +65,17 @@ def butt_callback(channel):
 
   print "Detected edge {} on channel {} at {} duration {}".format(buttValue, channel, buttRisingTime, buttDuration)
   if buttDuration > longPressTime:
+    print "LONG PRESS"
     longPressWaiting = True
     numLongPresses += 1
   elif buttDuration is not None:
     shortPressWaiting = True
     numShortPresses += 1
+    print "SHORT PRESS {}".format(numShortPresses)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback, bouncetime=200)  # add rising edge detection on a channel
+GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback)  # add rising edge detection on a channel
 #################################
 #             MAIN              #
 #################################

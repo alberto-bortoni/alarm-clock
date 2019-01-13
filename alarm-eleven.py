@@ -59,11 +59,11 @@ numShortPresses = 0
 #         GPIO INIT             #
 #################################
 
-butt_rising(channel):
+def butt_rising(channel):
   buttRisingTime = time.time()
   print "Rising edge detected on channel %i at %f".format(channel, buttRisingTime)
 
-butt_falling(channel):
+def butt_falling(channel):
   buttFallingTime = time.time()
   buttDuration = (buttFallingTime - buttRisingTime) if buttRisingTime is not None else None
   print "Detected falling edge on channel %i at %f duration %f".format(channel, buttRisingTime, buttDuration)

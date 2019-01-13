@@ -91,18 +91,18 @@ GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback)  # add rising edg
 def increase_volume():
   global volume, player, maxVol
   if (volume < maxVol):
-    print "Increasing volume"
+    volume = volume + volumeStep
+    print "Increasing volume to {}".format(volume)
     player.stdin.write('0')
     player.stdin.flush()
-    volume = volume + volumeStep
 
 def decrease_volume():
   global volume, player, minVol
   if (volume > minVol):
-    print "Decreasing volume"
+    volume = volume - volumeStep
+    print "Decreasing volume to {}".format(volume)
     player.stdin.write('9')
     player.stdin.flush()
-    volume = volume - volumeStep
 
 #################################
 #             MAIN              #

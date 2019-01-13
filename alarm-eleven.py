@@ -17,6 +17,7 @@ from random import *
 #          VARIABLES            #
 #################################
 
+longPressTime = 2
 snoozeTimes = 10
 timeIncVol = 5
 timeButt = 2
@@ -54,7 +55,7 @@ numShortPresses = 0
 #         GPIO INIT             #
 #################################
 def butt_callback(channel):
-  global buttRisingTime, buttFallingTime, buttDuration, longPressWaiting, shortPressWaiting, numLongPresses,numShortPresses
+  global buttRisingTime, buttFallingTime, buttDuration, longPressTime, longPressWaiting, shortPressWaiting, numLongPresses,numShortPresses
   buttValue = GPIO.input(channel)
   if buttValue:
     buttFallingTime = time.time()

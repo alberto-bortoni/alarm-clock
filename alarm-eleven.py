@@ -118,8 +118,8 @@ time.sleep(10)
 exitSequence = 'sslssl' #button press sequence for shutting off alarm
 
 while exitFlag==0:
-
   if (time.time()-lastTime >= timeIncVol):  #increase volume
+    lastTime = time.time()
     increase_volume()
 
   if(longPressWaiting or shortPressWaiting):                  #start snooze/exit

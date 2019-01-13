@@ -42,18 +42,19 @@ randSong = randint(1, songsNum)-1
 startTime = time.time()
 thisTime = time.time()
 lastTime = time.time()
-global buttRisingTime = None
-global buttFallingTime = None
-global buttDuration = None
-global longPressWaiting = False
-global shortPressWaiting = False
-global numLongPresses = 0
-global numShortPresses = 0
+buttRisingTime = None
+buttFallingTime = None
+buttDuration = None
+longPressWaiting = False
+shortPressWaiting = False
+numLongPresses = 0
+numShortPresses = 0
 
 #################################
 #         GPIO INIT             #
 #################################
 def butt_callback(channel):
+  global buttRisingTime, buttFallingTime, buttDuration, longPressWaiting, shortPressWaiting, numLongPresses,numShortPresses
   buttValue = GPIO.input(channel)
   if buttValue:
     buttFallingTime = time.time()

@@ -123,6 +123,8 @@ while exitFlag==0:
     increase_volume()
 
   if(longPressWaiting or shortPressWaiting):                  #start snooze/exit
+    longPressWaiting = False
+    shortPressWaiting = False
     decrease_volume()                       #reduce noise every button
 
     if(exitSequence in buttSequence):            #exit, snoozed

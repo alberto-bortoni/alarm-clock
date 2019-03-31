@@ -1,0 +1,7 @@
+Copy and paste these entries on the host crontab by entering the command "crontab -e"
+replace <path> with the appropiate one
+----------------------------------------
+
+41 06 * * 1-5 /<path>/alarm-eleven.py
+22 07 * * 6 /<path>/alarm-eleven.py
+22 07 * * 0 /<path>/alarm-eleven.py

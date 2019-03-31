@@ -61,7 +61,7 @@ prevBttnState = False
 # detects rising or falling edge and records the duration of the press
 # categorizes it as a short or long press according to pre determiend values above
 def butt_callback(channel):
-  global buttSequence, buttRisingTime, buttFallingTime, buttDuration, longPressTime, longPressWaiting, shortPressWaiting, numLongPresses, numShortPresses
+  global buttSequence, buttRisingTime, buttFallingTime, buttDuration, longPressTime, longPressWaiting, shortPressWaiting, numLongPresses, numShortPresses, prevBttnState
   buttValue = GPIO.input(channel)
 
   if buttValue and prevBttnState:
@@ -99,7 +99,7 @@ def butt_callback(channel):
 # add rising edge detection on a channel
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(butt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback, bouncetime=100)  
+GPIO.add_event_detect(butt, GPIO.BOTH, callback=butt_callback, bouncetime=100)
 
 #################################
 #       VOLUME CONTROLS         #
@@ -143,17 +143,17 @@ time.sleep(10)
 
 
 while exitFlag==0:
-  # increase volume periodially as per timeIncVol  
+  # increase volume periodially as per timeIncVol
   if (time.time()-lastTime >= timeIncVol):
     lastTime = time.time()
     increase_volume()
-  
+
   # if user presses button, either short or long, decrease volume
   if(longPressWaiting or shortPressWaiting):
     longPressWaiting  = False
     shortPressWaiting = False
     decrease_volume()
-    
+
     # if the exit sequence is found in the string of button presses, start to exit
     # kill the current song and start a new player with the end alarm sound
     if(exitSequence in buttSequence):            #exit, snoozed

@@ -1,4 +1,7 @@
 #! /usr/bin/python
+# first disable the shutdown routine
+subprocess.run(["/etc/init.d/listen-for-shutdown.sh", "stop"])
+
 #################################
 #             HEAD              #
 #################################
@@ -168,5 +171,9 @@ while exitFlag==0:
   if (time.time()-startTime > termLongTime):
     player.terminate()
     exitFlag = 1
+
+
+# first disable the shutdown routine
+subprocess.run(["/etc/init.d/listen-for-shutdown.sh", "start"])
 
 #EOF#

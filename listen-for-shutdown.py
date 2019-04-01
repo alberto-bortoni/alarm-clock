@@ -21,6 +21,8 @@ while True:
 
   if falling is not None:
     rising = GPIO.wait_for_edge(13, GPIO.RISING, timeout=10000)
-    if rising is None
-      print "shutdown"
+    if rising is None:
+      alarm = subprocess.Popen(["mplayer", "-volume", "75", "-really-quiet", "/home/eleven/Alarms/Alarm03.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+      time.sleep(6)
+      alarm.terminate()
       #subprocess.call(['shutdown', '-h', 'now'], shell=False)

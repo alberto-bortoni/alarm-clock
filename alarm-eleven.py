@@ -1,6 +1,4 @@
 #! /usr/bin/python
-# first disable the shutdown routine
-subprocess.run(["/etc/init.d/listen-for-shutdown.sh", "stop"])
 
 #################################
 #             HEAD              #
@@ -15,6 +13,8 @@ from time import sleep
 import RPi.GPIO as GPIO
 from random import *
 
+# first disable the shutdown routine
+subprocess.call(["/etc/init.d/listen-for-shutdown.sh", "stop"])
 
 #################################
 #          VARIABLES            #
@@ -174,6 +174,6 @@ while exitFlag==0:
 
 
 # first disable the shutdown routine
-subprocess.run(["/etc/init.d/listen-for-shutdown.sh", "start"])
+subprocess.call(["/etc/init.d/listen-for-shutdown.sh", "start"])
 
 #EOF#
